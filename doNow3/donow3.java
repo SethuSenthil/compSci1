@@ -1,4 +1,4 @@
-public class doNow
+public class doNow3
 {
 	public static void printer(String str) {
   		System.out.print(str);
@@ -7,8 +7,9 @@ public class doNow
 			System.out.println(" ");
 	  		System.out.print(str);
     }
-	public static void main (String[] args){
-String s;
-System.out.println(s);
+	public static void main (String[] args)
+	{
+printerNew("ho");
+
  }
 }
