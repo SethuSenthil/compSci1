@@ -1,3 +1,6 @@
+import java.util.Scanner;
+
+
 public class doNow
 {
 	public static void printer(String str) {
@@ -8,7 +11,11 @@ public class doNow
 	  		System.out.print(str);
     }
 	public static void main (String[] args){
-String s;
-System.out.println(s);
+  	    Scanner uinput = new Scanner(System.in);
+  	    System.out.println("Hi there. What is your name?");
+  	    String name = uinput.nextLine();
+  	    System.out.println("What adjective describes you?");
+  	    String adj = uinput.nextLine();
+  	    System.out.println("My name is " + name + " I am " + adj);
  }
 }
