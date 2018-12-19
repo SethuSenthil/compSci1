@@ -1,7 +1,7 @@
 import static java.lang.System.*;
 import java.util.Scanner;
 import java.lang.Math;
-public class doNow10 {
+public class doNow12 {
 public static void main (String[] args){
 //init
 out.println("Program " + Thread.currentThread().getStackTrace()[1] + " is running");
@@ -33,17 +33,19 @@ out.println("running " + name);
 Scanner txtScan = new Scanner(in);
 Scanner numScan = new Scanner(in);
 
-int num  = numScan.nextInt();
-
-
+int test = numScan.nextInt();
+switch(test) {
+	case 1: out.println("ok");
+	break;
+}
 }
 
 
 public static void prompt2(){
 String name = new Object(){}.getClass().getEnclosingMethod().getName();
 out.println("running " + name);
-Scanner txtScan = new Scanner(System.in);
-Scanner numScan = new Scanner(System.in);
+Scanner txtScan = new Scanner(in);
+Scanner numScan = new Scanner(in);
 
 
 }
@@ -52,19 +54,8 @@ Scanner numScan = new Scanner(System.in);
 public static void prompt3(){
 String name = new Object(){}.getClass().getEnclosingMethod().getName();
 out.println("running " + name);
-Scanner txtScan = new Scanner(System.in);
-Scanner getNum = new Scanner(System.in);
-
-out.println("enter a number");
-int num  = getNum.nextInt();
-String oddOrEven;
-if (num % 2 == 0) {
-oddOrEven = "even";
-} else {
-	oddOrEven = "odd";
-}
-
-out.println("The number you typed is" + oddOrEven);
+Scanner txtScan = new Scanner(in);
+Scanner getNum = new Scanner(in);
 
 }
 
