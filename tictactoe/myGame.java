@@ -1,144 +1,592 @@
 import java.util.Scanner;
+import static java.lang.System.*;
+
 public class myGame{
-		//setting global vars
-		public static TicTacToeBoard board = new TicTacToeBoard(620,720);
-			      		 public static char [][] arr = {
-				  						{'c','c','c'},
-				  						{'c','c','c'},
-				  						{'c','c','c'}
-					};
-
-public static char xo = 'x';
-
-
 	public static void main(String[] args){
-//init game
+		//init
+		Scanner reader = new Scanner ( in);
+		int[][]boardLine = {{0,200,600,200},
+							 {0,400,600,400},
+							 {200,0,200,600},
+							 {400,0,400,600}};
+		char [][]arr = new char[3][3];
+		for (int i=0;i<3;i++)
+			for (int j=0;j<3;j++)
+				arr[i][j]='c';
 
-
- int[][] grid = {
-						{0,200,600,200},
-						{200,0,200,600},
-						{400,0,400,600},
-						{0,400,500,400}
-					};
-boolean gameEnd = false;
-int lastPlay = 1;
-board.defineBoard(grid);
-board.setBoard(arr);
-board.setFiles("x.jpg","o.jpg" );
-board.repaint();
-Scanner txtScan = new Scanner(System.in);
-//actuall code stuff
-while(!gameEnd){
-	if(lastPlay%2 == 0){
-	//player 1 is playing
-				xo = 'o';
-		    System.out.println("Player 2 is playing");
-		    		                 		    System.out.println("Where do u want to put it");
-             String where = txtScan.nextLine();
-            placeBlock(where);
-
-updateGameBoard();
-
-		printGameArr();
-
-
-	} else {
-		//player 1 is playing
-				xo = 'x';
-		    System.out.println("Player 1 is playing");
-		    System.out.println("Where do u want to put it");
-             String where = txtScan.nextLine();
-            placeBlock(where);
-
-updateGameBoard();
-
-		printGameArr();
-
-	}
-	lastPlay++;
-}
-
-	}
-
-	public static void updateGameBoard(){
+		TicTacToeBoard board = new TicTacToeBoard(620,720);
+		board.defineBoard(boardLine);
+		board.setFiles("x.jpg","o.jpg");
 		board.setBoard(arr);
 		board.repaint();
-	}
-		public static void checkWinner(){
-			char store = 'g';
-				for(int i = 0; i < arr.length; i++){
-					for(int ii = 0; ii < arr[i].length; ii++){
-						if(ii == 1){
-							store = arr[i][ii];
-						}else{
-						if(store != arr[i][ii]){
-                                 break ;
-						}else{
-							//winner(arr[i][ii]);
-						}
 
-						}
-				}
+		boolean playerAtt = false, player2Att = false, botAtt = false, winner = false,notvalid = false, validres = false;
+
+		int tie = 0;
+		String txtScan = "";
+
+
+
+		out.println(" Ayyy! Welcome to tic tac toe. The board is comprehended as column(0 1 2) and row(0 1 2)");
+		out.println();
+
+		do{
+			 out.println("How many human players? Type in one or two to select");
+			txtScan = reader.nextLine();
+
+			 out.println();
+
+			if ((txtScan.equals("one"))||(txtScan.equals("two"))){
+					validres = true;
 			}
-
-							for(int i = 0; i < arr.length; i++){
-								for(int j = 0; j < 3; j++){
-									if(j == 1){
-										store = arr[i][j];
-									}else{
-									if(store != arr[i][j]){
-			                                 break ;
-									}else{
-										//winner(arr[i][ii]);
-									}
-
-									}
-							}
-			}
-	}
-
-		public static void printGameArr(){
-			for(int i = 0; i < arr.length; i++){
-				for(int ii = 0; ii < arr[i].length; ii++){
-								System.out.print(arr[i][ii]);
-			}
-											System.out.println(" ");
-			}
-	}
-		public static void placeBlock(String where){
-			 switch(where) {
-						   case "1":
-						     arr[0][0] = xo;
-						     break;
-						   case "2":
-						     arr[0][1] = xo;
-						     break;
-						        case "3":
-							 		      arr[0][2] = xo;
-						     break;
-						        case "4":
-							 		     arr[1][0] = xo;
-						     break;
-						        case "5":
-							 		     arr[1][1] = xo;
-						     break;
-						        case "6":
-							 		     arr[1][2] = xo;
-						     break;
-						        case "7":
-							 		     arr[2][0] = xo;
-						     break;
-						        case "8":
-							 		     arr[2][1] = xo;
-						     break;
-						        case "9":
-							 		      arr[2][2]  = xo;
-					     break;
-
+			else {
+				 out.println("Don't be dumb. You cant do that.");
+				 out.println();
+				validres = false;
 		}
+	}while(validres == false);
+
+		if (txtScan.equals("one")){
+				 out.println("You are X and Bot is O");
+				 out.println();
+
+		do{
+			do {
+				 out.println("Type in the row");
+				int row = reader.nextInt();
+
+				 out.println("Type in the column");
+				int column = reader.nextInt();
+
+
+				if ((row > 2 || row < 0) || (column > 2 || column < 0) ){
+					playerAtt = false;
+					 out.println();
+					 out.println("Sorry, Can't place it there.");
+					 out.println();
+				}
+				else if(arr[row][column] == 'c'){
+					arr[row][column] = 'x';
+					playerAtt = true;
+					tie++;
+				}
+				else{
+					playerAtt = false;
+					 out.println("Sorry, Can't place it there.");
+					 out.println();
+
+				}
+				board.repaint();
+
+			}while (playerAtt == false);
+   char store = 'k';
+
+
+
+   //loop dosent work so I did it the old fasion way
+                /*for (int i = 0; i < arr.length; i++) {
+					for (int j = 0; j < arr[i].length; j++) {
+						if(i ==0){
+							store = arr[i][j];
+						}else{
+							if(arr[i][j] != store){
+								break;
+							}else{
+
+							}
+						}
+					}
+				}*/
+
+				if(arr[0][0] == 'x' && arr[0][1] == 'x' && arr[0][2] == 'x' ){
+
+					 out.println("X wins");
+					board.setWinner("X wins", 130, 660, 55);
+					board.showText(true);
+					board.repaint();
+					winner = true;
+					break;
+
+				}
+
+				else if(arr[1][0] == 'x' && arr[1][1] == 'x' && arr[1][2] == 'x' ){
+
+					 out.println("X wins");
+					board.setWinner("X wins", 130, 660, 55);
+					board.showText(true);
+					board.repaint();
+					winner = true;
+					break;
+
+				}
+
+				else if(arr[2][0] == 'x' && arr[2][1] == 'x' && arr[2][2] == 'x' ){
+
+					 out.println("X wins");
+					board.setWinner("X wins", 130, 660, 55);
+					board.showText(true);
+					board.repaint();
+					winner = true;
+					break;
+
+				}
+
+				else if(arr[0][0] == 'x' && arr[1][0] == 'x' && arr[2][0] == 'x' ){
+
+					 out.println("X wins");
+					board.setWinner("X wins", 130, 660, 55);
+					board.showText(true);
+					board.repaint();
+					winner = true;
+					break;
+
+				}
+
+				else if(arr[0][1] == 'x' && arr[1][1] == 'x' && arr[2][1] == 'x' ){
+
+					 out.println("X wins");
+					board.setWinner("X wins", 130, 660, 55);
+					board.showText(true);
+					board.repaint();
+					winner = true;
+					break;
+
+				}
+
+				else if(arr[0][2] == 'x' && arr[1][2] == 'x' && arr[2][2] == 'x' ){
+
+					 out.println("X wins");
+					board.setWinner("X wins", 130, 660, 55);
+					board.showText(true);
+					board.repaint();
+					winner = true;
+					break;
+
+				}
+				else if(arr[0][0] == 'x' && arr[1][1] == 'x' && arr[2][2] == 'x' ){
+
+					 out.println("X wins");
+					board.setWinner("X wins", 130, 660, 55);
+					board.showText(true);
+					board.repaint();
+					winner = true;
+					break;
+
+				}
+
+				else if(arr[0][2] == 'x' && arr[1][1] == 'x' && arr[2][0] == 'x' ){
+
+					 out.println("X wins");
+					board.setWinner("X wins", 130, 660, 55);
+					board.showText(true);
+					board.repaint();
+					winner = true;
+					break;
+
+				}
+
+				if (tie == 9){
+
+					 out.println("Its a freakin tie! Not te tie you wear.");
+					board.setWinner("Its a freakin tie! Not te tie you wear.", 130, 660, 55);
+					board.showText(true);
+					board.repaint();
+					break;
+						}
+				 out.println("Bot's Turn");
+						board.delay(1000);
+
+				do{
+				int x = (int)(Math.random()*3)+0;
+				int y = (int)(Math.random()*3)+0;
+
+					if(arr[x][y] == 'c'){
+						arr[x][y] = 'o';
+							botAtt = true;
+							tie++;
+					}
+					else{
+						botAtt = false;
+					}
+
+					board.repaint();
+
+				}while(botAtt == false);
+
+
+			if(arr[0][0] == 'o' && arr[0][1] == 'o' && arr[0][2] == 'o' ){
+
+					 out.println("Bot wins");
+					board.setWinner("Bot wins", 130, 660, 55);
+					board.showText(true);
+					board.repaint();
+					winner = true;
+					break;
+
+			}
+
+			else if(arr[1][0] == 'o' && arr[1][1] == 'o' && arr[1][2] == 'o' ){
+
+					 out.println("Bot wins");
+					board.setWinner("Bot wins", 130, 660, 55);
+					board.showText(true);
+					board.repaint();
+					winner = true;
+					break;
+
+			}
+
+			else if(arr[2][0] == 'o' && arr[2][1] == 'o' && arr[2][2] == 'o' ){
+
+					 out.println("Bot wins");
+					board.setWinner("Bot wins", 130, 660, 55);
+					board.showText(true);
+					board.repaint();
+					winner = true;
+					break;
+
+			}
+
+			else if(arr[0][0] == 'o' && arr[0][1] == 'o' && arr[0][2] == 'o' ){
+
+					 out.println("Bot wins");
+					board.setWinner("Bot wins", 130, 660, 55);
+					board.showText(true);
+					board.repaint();
+					winner = true;
+					break;
+
+			}
+
+			else if(arr[1][0] == 'o' && arr[1][1] == 'o' && arr[1][2] == 'o' ){
+
+					 out.println("Bot wins");
+					board.setWinner("Bot wins", 130, 660, 55);
+					board.showText(true);
+					board.repaint();
+					winner = true;
+					break;
+
+			}
+
+			else if(arr[2][0] == 'o' && arr[2][1] == 'o' && arr[2][2] == 'o' ){
+
+					 out.println("Bot wins");
+					board.setWinner("Bot wins", 130, 660, 55);
+					board.showText(true);
+					board.repaint();
+					winner = true;
+					break;
+
+			}
+			else if(arr[0][0] == 'o' && arr[1][1] == 'o' && arr[2][2] == 'o' ){
+
+					 out.println("Bot wins");
+					board.setWinner("Bot wins", 130, 660, 55);
+					board.showText(true);
+					board.repaint();
+					winner = true;
+					break;
+
+			}
+
+			else if(arr[0][2] == 'o' && arr[1][1] == 'o' && arr[2][0] == 'o' ){
+
+					 out.println("Bot wins");
+					board.setWinner("Bot wins", 130, 660, 55);
+					board.showText(true);
+					board.repaint();
+					winner = true;
+					break;
+
+				}
+
+
+			if (tie == 9){
+				 out.println("Its a freakin tie");
+				board.setWinner("ts a freakin tie", 130, 660, 55);
+				board.showText(true);
+				board.repaint();
+				break;
+
+
+			}
+		}while (winner == false);
+	}
+	else{
+		 out.println();
+		 out.println("Player 1 (you)[X] and Player 2 is [O]");
+
+
+
+				do{
+
+					do {
+
+					 out.println();
+
+					 out.println("Player 1's Turn: \nEnter what row you want");
+					int row = reader.nextInt();
+
+					 out.println("Enter what column you want");
+					int column = reader.nextInt();
+
+
+
+					if ((row > 2 || row < 0) || (column > 2 || column < 0) ){
+
+						playerAtt = false;
+						 out.println();
+						 out.println("Sorry, cant place it there.");
+						 out.println();
+					}
+					else if(arr[row][column] == 'c'){
+						arr[row][column] = 'x';
+						playerAtt = true;
+						tie++;
+					}
+					else{
+						playerAtt = false;
+						 out.println("That spot is invalid");
+						 out.println();
+
+					}
+				board.repaint();
+
+				}while (playerAtt == false);
+						if(arr[0][0] == 'x' && arr[0][1] == 'x' && arr[0][2] == 'x' ){
+
+								 out.println("X wins");
+								board.setWinner("X wins", 130, 660, 55);
+								board.showText(true);
+								board.repaint();
+								winner = true;
+								break;
+
+						}
+
+						else if(arr[1][0] == 'x' && arr[1][1] == 'x' && arr[1][2] == 'x' ){
+
+								 out.println("X wins");
+								board.setWinner("X wins", 130, 660, 55);
+								board.showText(true);
+								board.repaint();
+								winner = true;
+								break;
+
+						}
+
+						else if(arr[2][0] == 'x' && arr[2][1] == 'x' && arr[2][2] == 'x' ){
+
+								 out.println("X wins");
+								board.setWinner("X wins", 130, 660, 55);
+								board.showText(true);
+								board.repaint();
+								winner = true;
+								break;
+
+						}
+
+						else if(arr[0][0] == 'x' && arr[1][0] == 'x' && arr[2][0] == 'x' ){
+
+								 out.println("X wins");
+								board.setWinner("X wins", 130, 660, 55);
+								board.showText(true);
+								board.repaint();
+								winner = true;
+								break;
+
+						}
+
+						else if(arr[0][1] == 'x' && arr[1][1] == 'x' && arr[2][1] == 'x' ){
+
+								 out.println("X wins");
+								board.setWinner("X wins", 130, 660, 55);
+								board.showText(true);
+								board.repaint();
+								winner = true;
+								break;
+
+						}
+
+						else if(arr[0][2] == 'x' && arr[1][2] == 'x' && arr[2][2] == 'x' ){
+
+								 out.println("X wins");
+								board.setWinner("X wins", 130, 660, 55);
+								board.showText(true);
+								board.repaint();
+								winner = true;
+								break;
+
+						}
+						else if(arr[0][0] == 'x' && arr[1][1] == 'x' && arr[2][2] == 'x' ){
+
+								 out.println("X wins");
+								board.setWinner("X wins", 130, 660, 55);
+								board.showText(true);
+								board.repaint();
+								winner = true;
+								break;
+
+						}
+
+						else if(arr[0][2] == 'x' && arr[1][1] == 'x' && arr[2][0] == 'x' ){
+
+								 out.println("X wins");
+								board.setWinner("X wins", 130, 660, 55);
+								board.showText(true);
+								board.repaint();
+								winner = true;
+								break;
+
+						}
+
+						if (tie == 9){
+
+								 out.println("IT'S A TIE");
+								board.setWinner("IT'S A TIE", 130, 660, 55);
+								board.showText(true);
+								board.repaint();
+								break;
+
+
+						}
+						do {
+
+						 out.println();
+
+						 out.println("Player 2's Turn: \nEnter what row you want");
+						int row = reader.nextInt();
+
+						 out.println("Enter what column you want");
+						int column = reader.nextInt();
+
+
+
+						if ((row > 2 || row < 0) || (column > 2 || column < 0) ){
+							player2Att = false;
+							 out.println();
+							 out.println("Not Valid enter again");
+							 out.println();
+						}
+						else if(arr[row][column] == 'c'){
+							arr[row][column] = 'o';
+							player2Att = true;
+							tie++;
+						}
+						else{
+							player2Att = false;
+							 out.println();
+							 out.println("That spot is invalid");
+							 out.println();
+
+						}
+					board.repaint();
+
+					}while (player2Att == false);
+
+
+					if(arr[0][0] == 'o' && arr[0][1] == 'o' && arr[0][2] == 'o' ){
+
+							 out.println("PLAYER 2 wins");
+							board.setWinner("PLAYER 2 wins", 130, 660, 55);
+							board.showText(true);
+							board.repaint();
+							winner = true;
+							break;
+
+					}
+
+					else if(arr[1][0] == 'o' && arr[1][1] == 'o' && arr[1][2] == 'o' ){
+
+							 out.println("PLAYER 2 wins");
+							board.setWinner("PLAYER 2 wins", 130, 660, 55);
+							board.showText(true);
+							board.repaint();
+							winner = true;
+							break;
+
+					}
+
+					else if(arr[2][0] == 'o' && arr[2][1] == 'o' && arr[2][2] == 'o' ){
+
+							 out.println("PLAYER 2 wins");
+							board.setWinner("PLAYER 2 wins", 130, 660, 55);
+							board.showText(true);
+							board.repaint();
+							winner = true;
+							break;
+
+					}
+
+					else if(arr[0][0] == 'o' && arr[0][1] == 'o' && arr[0][2] == 'o' ){
+
+							 out.println("PLAYER 2 wins");
+							board.setWinner("PLAYER 2 wins", 130, 660, 55);
+							board.showText(true);
+							board.repaint();
+							winner = true;
+							break;
+
+					}
+
+					else if(arr[1][0] == 'o' && arr[1][1] == 'o' && arr[1][2] == 'o' ){
+
+							 out.println("PLAYER 2 wins");
+							board.setWinner("PLAYER 2 wins", 130, 660, 55);
+							board.showText(true);
+							board.repaint();
+							winner = true;
+							break;
+
+					}
+
+					else if(arr[2][0] == 'o' && arr[2][1] == 'o' && arr[2][2] == 'o' ){
+
+							 out.println("PLAYER 2 wins");
+							board.setWinner("PLAYER 2 wins", 130, 660, 55);
+							board.showText(true);
+							board.repaint();
+							winner = true;
+							break;
+
+					}
+					else if(arr[0][0] == 'o' && arr[1][1] == 'o' && arr[2][2] == 'o' ){
+
+							 out.println("PLAYER 2 wins");
+							board.setWinner("PLAYER 2 wins", 130, 660, 55);
+							board.showText(true);
+							board.repaint();
+							winner = true;
+							break;
+
+					}
+
+					else if(arr[0][2] == 'o' && arr[1][1] == 'o' && arr[2][0] == 'o' ){
+
+							 out.println("PLAYER 2 wins");
+							board.setWinner("PLAYER 2 wins", 130, 660, 55);
+							board.showText(true);
+							board.repaint();
+							winner = true;
+							break;
+
+						}
+
+
+
+					if (tie == 9){
+							 out.println("Its a freakin tie! Not te tie you wear.");
+							board.setWinner("Its a freakin tie! Not te tie you wear.", 130, 660, 55);
+							board.showText(true);
+							board.repaint();
+							break;
+
+
+						}
+				}while (winner == false);
+
+	}
+	}
 	}
 
-
-
-}
