@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import static java.lang.System.*;
 
-public class myGame{
+public class SethuSenthilTicTacToe{
 	public static void main(String[] args){
 		//init
 		Scanner reader = new Scanner ( in);
@@ -83,25 +83,81 @@ public class myGame{
 
 
 
-   //loop dosent work so I did it the old fasion way
                 /*for (int i = 0; i < arr.length; i++) {
 					for (int j = 0; j < arr[i].length; j++) {
 						if(i ==0){
-							store = arr[i][j];
+							store = 'x';
 						}else{
-							if(arr[i][j] != store){
-								break;
-							}else{
-
+							if(arr[i][j] == store){
+												 out.println("X wins");
+													board.setWinner("X wins", 130, 660, 55);
+													board.showText(true);
+													board.repaint();
+													winner = true;
+					break;
 							}
 						}
 					}
-				}*/
+				}
+				store = 'k';
 
+	for(int i = 0; i < arr.length; i++){
+	for(int j = 0; j < 3; j++){
+								if(i ==0){
+							store = 'x';
+								}else{
+									if(arr[j][i] == store){
+														 out.println("X wins");
+															board.setWinner("X wins", 130, 660, 55);
+															board.showText(true);
+															board.repaint();
+															winner = true;
+							break;
+									}
+						}
+	}
+}
+
+store = 'k';
+
+
+	for(int i = 0; i < arr.length; i++){
+		if(i ==0){
+							store = 'x';
+										}else{
+											if(arr[i][i] == store){
+																 out.println("X wins");
+																	board.setWinner("X wins", 130, 660, 55);
+																	board.showText(true);
+																	board.repaint();
+																	winner = true;
+									break;
+											}
+						}
+	}
+store = 'k';
+
+
+	   int track = 3;
+		for(int i = 0; i < arr.length; i++){
+			if(i ==0){
+												store = arr[i][track];
+											}else{
+												if(arr[i][track] == store){
+																	 out.println("X wins");
+																		board.setWinner("X wins", 130, 660, 55);
+																		board.showText(true);
+																		board.repaint();
+																		winner = true;
+																		   track--;
+										break;
+												}
+							}
+	}*/
 				if(arr[0][0] == 'x' && arr[0][1] == 'x' && arr[0][2] == 'x' ){
 
-					 out.println("X wins");
-					board.setWinner("X wins", 130, 660, 55);
+					System.out.println("X WINS");
+					board.setWinner("X WINS", 130, 660, 55);
 					board.showText(true);
 					board.repaint();
 					winner = true;
@@ -111,8 +167,8 @@ public class myGame{
 
 				else if(arr[1][0] == 'x' && arr[1][1] == 'x' && arr[1][2] == 'x' ){
 
-					 out.println("X wins");
-					board.setWinner("X wins", 130, 660, 55);
+					System.out.println("X WINS");
+					board.setWinner("X WINS", 130, 660, 55);
 					board.showText(true);
 					board.repaint();
 					winner = true;
@@ -122,8 +178,8 @@ public class myGame{
 
 				else if(arr[2][0] == 'x' && arr[2][1] == 'x' && arr[2][2] == 'x' ){
 
-					 out.println("X wins");
-					board.setWinner("X wins", 130, 660, 55);
+					System.out.println("X WINS");
+					board.setWinner("X WINS", 130, 660, 55);
 					board.showText(true);
 					board.repaint();
 					winner = true;
@@ -133,8 +189,8 @@ public class myGame{
 
 				else if(arr[0][0] == 'x' && arr[1][0] == 'x' && arr[2][0] == 'x' ){
 
-					 out.println("X wins");
-					board.setWinner("X wins", 130, 660, 55);
+					System.out.println("X WINS");
+					board.setWinner("X WINS", 130, 660, 55);
 					board.showText(true);
 					board.repaint();
 					winner = true;
@@ -144,8 +200,8 @@ public class myGame{
 
 				else if(arr[0][1] == 'x' && arr[1][1] == 'x' && arr[2][1] == 'x' ){
 
-					 out.println("X wins");
-					board.setWinner("X wins", 130, 660, 55);
+					System.out.println("X WINS");
+					board.setWinner("X WINS", 130, 660, 55);
 					board.showText(true);
 					board.repaint();
 					winner = true;
@@ -155,8 +211,8 @@ public class myGame{
 
 				else if(arr[0][2] == 'x' && arr[1][2] == 'x' && arr[2][2] == 'x' ){
 
-					 out.println("X wins");
-					board.setWinner("X wins", 130, 660, 55);
+					System.out.println("X WINS");
+					board.setWinner("X WINS", 130, 660, 55);
 					board.showText(true);
 					board.repaint();
 					winner = true;
@@ -165,8 +221,8 @@ public class myGame{
 				}
 				else if(arr[0][0] == 'x' && arr[1][1] == 'x' && arr[2][2] == 'x' ){
 
-					 out.println("X wins");
-					board.setWinner("X wins", 130, 660, 55);
+					System.out.println("X WINS");
+					board.setWinner("X WINS", 130, 660, 55);
 					board.showText(true);
 					board.repaint();
 					winner = true;
@@ -176,14 +232,15 @@ public class myGame{
 
 				else if(arr[0][2] == 'x' && arr[1][1] == 'x' && arr[2][0] == 'x' ){
 
-					 out.println("X wins");
-					board.setWinner("X wins", 130, 660, 55);
+					System.out.println("X WINS");
+					board.setWinner("X WINS", 130, 660, 55);
 					board.showText(true);
 					board.repaint();
 					winner = true;
 					break;
 
 				}
+
 
 				if (tie == 9){
 
