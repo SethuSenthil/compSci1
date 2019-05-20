@@ -1,4 +1,3 @@
-import static java.lang.System.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.animation.AnimationTimer;
@@ -19,11 +18,11 @@ import javafx.event.*;
 import javafx.scene.input.*;
 import javafx.scene.text.*;
 
-public class Game extends Application implements EventHandler<InputEvent>
+public class HeroGame extends Application implements EventHandler<InputEvent>
 {
 	GraphicsContext gc;
 	Canvas canvas;
-	Player hero;
+	Hero hero;
 	Image h;
 	AnimateObjects animate;
 
@@ -39,6 +38,8 @@ public class Game extends Application implements EventHandler<InputEvent>
 		scene.addEventHandler(KeyEvent.KEY_PRESSED,this);
 		scene.addEventHandler(MouseEvent.MOUSE_CLICKED,this);
 		gc = canvas.getGraphicsContext2D();
+		hero = new Hero("Cape Man", 10);
+		h = new Image("hero.jpg");
 		animate = new AnimateObjects();
 		animate.start();
 		stage.show();
@@ -49,7 +50,7 @@ public class Game extends Application implements EventHandler<InputEvent>
 		public void handle(long now)
 		{
 			gc.clearRect(0,0,canvas.getWidth(),canvas.getHeight());
-			gc.drawImage(h,hero.getX(), hero.getY() );
+			//gc.drawImage(h,hero.getX(), hero.getY() );
 			// if (hero.getX() < canvas.getWidth() - h.getWidth() )
 			// hero.moveRight();
 
@@ -71,6 +72,10 @@ public class Game extends Application implements EventHandler<InputEvent>
 			if(hero.getX() > 5)
 			hero.moveX(-5);
 		}
+			if (event instanceof MouseEvent)
+			{
+				hero.moveToXY( (int) ( (MouseEvent)event).getX(), (int) ( (MouseEvent)event).getY()  );
+			}
 
 
 
