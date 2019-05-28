@@ -17,6 +17,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.event.*;
 import javafx.scene.input.*;
 import javafx.scene.text.*;
+import java.util.ArrayList;
 
 public class HeroGame extends Application implements EventHandler<InputEvent>
 {
@@ -36,30 +37,48 @@ public class HeroGame extends Application implements EventHandler<InputEvent>
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		scene.addEventHandler(KeyEvent.KEY_PRESSED,this);
-		scene.addEventHandler(MouseEvent.MOUSE_CLICKED,this);
 		gc = canvas.getGraphicsContext2D();
 		hero = new Hero("Cape Man", 10);
 		h = new Image("hero.jpg");
 		animate = new AnimateObjects();
 		animate.start();
 		stage.show();
-	}
 
+	}
+	ArrayList<Food> foodList = new ArrayList<Food>();
+public boolean foodMade = false;
 	public class AnimateObjects extends AnimationTimer
 	{
+
 		public void handle(long now)
 		{
-			gc.clearRect(0,0,canvas.getWidth(),canvas.getHeight());
-			//gc.drawImage(h,hero.getX(), hero.getY() );
-			// if (hero.getX() < canvas.getWidth() - h.getWidth() )
-			// hero.moveRight();
 
-			Rectangle2D rec1 = new Rectangle2D(hero.getX(), hero.getY(),100,100);
+			gc.fillOval(0,0,canvas.getWidth(),canvas.getHeight());
+
+           int loopNum = 1;
+			for(int i = 0; i < loopNum; i ++){
+				if(foodMade == false){
+				if(i == loopNum-1){
+					foodMade = true;
+				}
+			   int randX = (int) (Math.random() * 800);
+			   int randY = (int) (Math.random() * 400);
+				Food bett = new Food();
+				bett.createFood(randX, randY, gc);
+				foodList.add(bett);
+			}
+			}
+
+
+Rectangle2D rec1 = new Rectangle2D(hero.getX(), hero.getY(),100,100);
+				gc.fillRect(hero.getX(), hero.getY(), 100, 100);
+
 			gc.fillRect(hero.getX(), hero.getY(), 100, 100);
-
+            if(hero.getX() == 30 && hero.getY() == 30) {
+				System.out.println("bet");
+			}
 		}
 	}
-
 	public void handle(final InputEvent event)
 	{
 		if (event instanceof KeyEvent)
@@ -69,13 +88,16 @@ public class HeroGame extends Application implements EventHandler<InputEvent>
 			if ( ( (KeyEvent)event).getCode() == KeyCode.RIGHT)
 			hero.moveX(5);
 
-			if(hero.getX() > 5)
-			hero.moveX(-5);
 		}
-			if (event instanceof MouseEvent)
-			{
-				hero.moveToXY( (int) ( (MouseEvent)event).getX(), (int) ( (MouseEvent)event).getY()  );
-			}
+				if ( ( (KeyEvent)event).getCode() == KeyCode.DOWN){
+					hero.moveY(5);
+				}
+
+							if ( ( (KeyEvent)event).getCode() == KeyCode.UP){
+									hero.moveY(-5);
+				}
+
+
 
 
 
