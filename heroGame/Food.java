@@ -28,6 +28,7 @@ class Food {
 	private int y = 0;
     private GraphicsContext gmc;
     private Rectangle2D rect;
+    private Color theColor;
  public void Food(){
 
  };
@@ -52,14 +53,19 @@ class Food {
  public boolean getAlive(){
       return isAlive;
  };
- public void createFood(int ranX, int ranY,GraphicsContext gcc){
+ public void createFood(int ranX, int ranY,GraphicsContext gcc, Color theColorr){
        x = ranX;
        y = ranY;
        gmc = gcc;
+       theColor = theColorr;
  			     rect = new Rectangle2D( x, y,20,20);
- 		   		 gmc.fillRect(x, y, 20, 20);
+ 		   		 gmc.fillOval(x, y, 20, 20);
 }
 public void paint(){
-	gmc.fillRect(x, y, 20, 20);
+	gmc.fillOval(x, y, 20, 20);
+	gmc.setFill(theColor);
+}
+public Rectangle2D getRect(){
+	return rect;
 }
  }
