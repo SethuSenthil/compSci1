@@ -21,7 +21,7 @@ import javafx.scene.text.*;
 
 class Food {
 	private boolean isAlive = true;
-	private double size = 5;
+	private int size = 20;
 	private double mass = 0;
 	private double speed = 0;
 	private int x = 0;
@@ -40,14 +40,14 @@ class Food {
    return speed;
  };
 
-  public double getSize(){
+  public int getSize(){
 	  return size;
 
  };
 
    public void speed(){
  };
-   public void setSize(double ssize){
+   public void setSize(int ssize){
      size = ssize;
  };
  public boolean getAlive(){
@@ -61,11 +61,50 @@ class Food {
  			     rect = new Rectangle2D( x, y,20,20);
  		   		 gmc.fillOval(x, y, 20, 20);
 }
+public void createFood(int ranX, int ranY,GraphicsContext gcc, Color theColorr, int sizee){
+       x = ranX;
+       y = ranY;
+       gmc = gcc;
+       size = sizee;
+       theColor = theColorr;
+ 			     rect = new Rectangle2D( x, y,size,size);
+ 		   		 gmc.fillOval(x, y, size, size);
+}
 public void paint(){
-	gmc.fillOval(x, y, 20, 20);
+	gmc.fillOval(x, y, size, size);
 	gmc.setFill(theColor);
 }
 public Rectangle2D getRect(){
 	return rect;
 }
+	public int getX()
+	{
+		return x;
+	}
+
+	public int getY()
+	{
+		return y;
+	}
+
+	public void moveRight()
+	{
+		x ++;
+	}
+
+	public void moveX(int a)
+	{
+		x+= a;
+	}
+
+	public void moveToXY(int a , int b)
+	{
+		x = a;
+		y = b;
+	}
+
+	public void moveY(int a)
+	{
+		y+= a;
+	}
  }
