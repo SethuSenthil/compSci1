@@ -1,26 +1,25 @@
-public class Hero extends Food
+public class Hero
 {
-	private int x;
-	private int y;
+	private double x;
+	private double y;
 
 	public Hero()
 	{
-		x = 100;
-		y = 100;
+		x = 100.0;
+		y = 100.0;
 	}
 
-	public Hero(String name, int health)
+	public Hero(String name)
 	{
-		x = 100;
-		y = 100;
+
 	}
 
-	public int getX()
+	public double getX()
 	{
 		return x;
 	}
 
-	public int getY()
+	public double getY()
 	{
 		return y;
 	}
@@ -30,18 +29,18 @@ public class Hero extends Food
 		x ++;
 	}
 
-	public void moveX(int a)
+	public void moveX(double a)
 	{
 		x+= a;
 	}
 
-	public void moveToXY(int a , int b)
+	public void moveToXY(double a , double b)
 	{
 		x = a;
 		y = b;
 	}
 
-	public void moveY(int a)
+	public void moveY(double a)
 	{
 		y+= a;
 	}

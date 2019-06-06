@@ -31,7 +31,8 @@ public class HeroGame extends Application implements EventHandler<InputEvent>
 	Hero hero;
 	Image h;
 	AnimateObjects animate;
-public Food goodGuy = new Food();
+	int size = 100;
+	double speed = 5.0;
 
 	public void start(Stage stage)
 	{
@@ -44,17 +45,16 @@ public Food goodGuy = new Food();
 		stage.setScene(scene);
 		scene.addEventHandler(KeyEvent.KEY_PRESSED,this);
 		gc = canvas.getGraphicsContext2D();
-		hero = new Hero("Cape Man", 0);
+		hero = new Hero();
 		h = new Image("hero.jpg");
 		animate = new AnimateObjects();
 		animate.start();
 		stage.show();
-goodGuy.createFood(80, 90, gc, colors[0], 100);
+
 	}
 Color[] colors = {Color.web("0x3cba54"), Color.web("0xf4c20d"), Color.web("0xdb3236"), Color.web("0x4885ed")};
 	ArrayList<Food> foodList = new ArrayList<Food>();
 public boolean foodMade = false;
-
 	public class AnimateObjects extends AnimationTimer
 	{
 
@@ -64,33 +64,38 @@ public boolean foodMade = false;
 
 			gc.clearRect(0,0,canvas.getWidth(),canvas.getHeight());
 
-        int loopNum = 30;
-	   			for(int i = 0; i < loopNum; i ++){
-	   				if(foodMade == false){
-	   				if(i == loopNum-1){
-	   					foodMade = true;
-	   				}
-	   			   int randX = (int) (Math.random() * 800);
-	   			   int randY = (int) (Math.random() * 400);
-	   				Food bett = new Food();
-	   				bett.createFood(randX, randY, gc, ranColor());
-	   				foodList.add(bett);
-	   			}
-	   			}
+           int loopNum = 30;
+			for(int i = 0; i < loopNum; i ++){
+				if(foodMade == false){
+				if(i == loopNum-1){
+					foodMade = true;
+				}
+			   int randX = (int) (Math.random() * 800);
+			   int randY = (int) (Math.random() * 400);
+				Food bett = new Food();
+				bett.createFood(randX, randY, gc, ranColor());
+				foodList.add(bett);
+			}
+			}
 
-	   			for (Food thisFood : foodList) {
-	   			     thisFood.paint();
-	   }
+			for (Food thisFood : foodList) {
+			     thisFood.paint();
+}
 
 
-goodGuy.paint();
-
+Rectangle2D rec1 = new Rectangle2D(hero.getX(), hero.getY(),size,size);
+				gc.fillOval(hero.getX(), hero.getY(), size, size);
 
 for (int fod = 0; fod < foodList.size(); fod++)
 {
 	Rectangle2D foodThing = foodList.get(fod).getRect();
-            if(goodGuy.getRect().intersects(foodThing)) {
+            if(rec1.intersects(foodThing)) {
 				foodList.remove(fod);
+				size += 3;
+				speed -= 0.03;
+				if(foodList.size() == 0){  //winning things
+					System.out.println("You Won");
+				}
 			}
 		}
 
@@ -106,19 +111,18 @@ for (int fod = 0; fod < foodList.size(); fod++)
 	{
 		if (event instanceof KeyEvent)
 		{
-
 			if ( ( (KeyEvent)event).getCode() == KeyCode.LEFT)
-			goodGuy.moveX(-5);
+			hero.moveX(-(speed));
 			if ( ( (KeyEvent)event).getCode() == KeyCode.RIGHT)
-			goodGuy.moveX(5);
+			hero.moveX(speed);
 
 		}
 				if ( ( (KeyEvent)event).getCode() == KeyCode.DOWN){
-					goodGuy.moveY(5);
+					hero.moveY(speed);
 				}
 
-				if ( ( (KeyEvent)event).getCode() == KeyCode.UP){
-				goodGuy.moveY(-5);
+							if ( ( (KeyEvent)event).getCode() == KeyCode.UP){
+									hero.moveY(-(speed));
 				}
 
 
