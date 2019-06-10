@@ -33,11 +33,12 @@ public class HeroGame extends Application implements EventHandler<InputEvent>
 	AnimateObjects animate;
 	int size = 100;
 	double speed = 5.0;
+	boolean endGame = false;
 
 	public void start(Stage stage)
 	{
 
-		stage.setTitle("Hero Game");
+		stage.setTitle("Agar.io but it's bad");
 		Group root = new Group();
 		canvas = new Canvas(800,400);
 		root.getChildren().add(canvas);
@@ -61,8 +62,18 @@ public boolean foodMade = false;
 
 		public void handle(long now)
 		{
+			if(!endGame){
 
 			gc.clearRect(0,0,canvas.getWidth(),canvas.getHeight());
+
+
+   	  		gc.setFill( Color.BLACK);
+   	  		gc.setStroke( Color.BLACK );
+   	  		gc.setLineWidth(1);
+   	  		Font font = Font.font( "Arial", FontWeight.NORMAL, 48 );
+   	  		gc.setFont( font );
+   	  		gc.fillText( "Mass: " + size, 280, 370 );
+            gc.strokeText( "Mass: " + size , 280, 370 );
 
            int loopNum = 30;
 			for(int i = 0; i < loopNum; i ++){
@@ -95,13 +106,25 @@ for (int fod = 0; fod < foodList.size(); fod++)
 				speed -= 0.03;
 				if(foodList.size() == 0){  //winning things
 					System.out.println("You Won");
+				    gc.clearRect(0,0,canvas.getWidth(),canvas.getHeight());
+					endGame = true;
+					   	  		gc.setFill( Color.BLACK);
+					   	  		gc.setStroke( Color.BLACK );
+					   	  		gc.setLineWidth(1);
+					   	  		gc.setFont( font );
+					   	  		gc.fillText( "You Won!", 320, 200 );
+            gc.strokeText( "You Won!", 320, 200 );
 				}
 			}
 		}
 
 		}
 	}
-
+	}
+	/*public void print(String s,int x,int y,int size){
+		gc.setFont(new Font("TimesRoman", Font.PLAIN, size));
+		gc.drawString(s,x,y);
+	}*/
 	public Color ranColor(){
     int ranNum = (int) (Math.random() *colors.length );
     return colors[ranNum];
