@@ -36,13 +36,13 @@ public class Text
        x = xx;
        y = yy;
        size = sizee;
-       gcc = gmc;
+       gmc = gcc;
 	}
 	public void print(){
 	  		gmc.setFill( Color.BLACK);
 	  		gmc.setStroke( Color.BLACK );
 	  		gmc.setLineWidth(1);
-	  		Font font = Font.font( "Arial", FontWeight.NORMAL, 48 );
+	  		Font font = Font.font( "Arial", FontWeight.NORMAL, size );
 	  		gmc.setFont( font );
 	  		gmc.fillText( txt, x, y );
 gmc.strokeText( txt, x, y );

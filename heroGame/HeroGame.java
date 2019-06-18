@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 /*
 TODO:
-Score
+Add everything to arraylist
 */
 
 public class HeroGame extends Application implements EventHandler<InputEvent>
@@ -29,9 +29,10 @@ public class HeroGame extends Application implements EventHandler<InputEvent>
 	GraphicsContext gc;
 	Canvas canvas;
 	Hero hero;
+		Hero enemy;
 	Image h;
 	AnimateObjects animate;
-	int size = 100;
+	int size = 100, canvasX = 1000, canvasY = 1000;
 	double speed = 5.0;
 	boolean endGame = false;
 
@@ -40,21 +41,23 @@ public class HeroGame extends Application implements EventHandler<InputEvent>
 
 		stage.setTitle("Agar.io but it's bad");
 		Group root = new Group();
-		canvas = new Canvas(800,400);
+		canvas = new Canvas(canvasX,canvasY);
 		root.getChildren().add(canvas);
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		scene.addEventHandler(KeyEvent.KEY_PRESSED,this);
 		gc = canvas.getGraphicsContext2D();
-		hero = new Hero();
+		hero = new Hero(true);
 		h = new Image("hero.jpg");
 		animate = new AnimateObjects();
 		animate.start();
 		stage.show();
+		double enemyPath = 0;
 
 	}
 Color[] colors = {Color.web("0x3cba54"), Color.web("0xf4c20d"), Color.web("0xdb3236"), Color.web("0x4885ed")};
 	ArrayList<Food> foodList = new ArrayList<Food>();
+	ArrayList<Hero> peopleList = new ArrayList<Hero>();
 public boolean foodMade = false;
 	public class AnimateObjects extends AnimationTimer
 	{
@@ -66,23 +69,19 @@ public boolean foodMade = false;
 
 			gc.clearRect(0,0,canvas.getWidth(),canvas.getHeight());
 
-
-   	  		gc.setFill( Color.BLACK);
-   	  		gc.setStroke( Color.BLACK );
-   	  		gc.setLineWidth(1);
-   	  		Font font = Font.font( "Arial", FontWeight.NORMAL, 48 );
-   	  		gc.setFont( font );
-   	  		gc.fillText( "Mass: " + size, 280, 370 );
-            gc.strokeText( "Mass: " + size , 280, 370 );
-
-           int loopNum = 30;
-			for(int i = 0; i < loopNum; i ++){
-				if(foodMade == false){
-				if(i == loopNum-1){
+           int foodNum = 100;
+           int enemyNum = 3;
+           	if(!foodMade){
+				for(int i = 0; i < enemyNum; i ++){
+				  Hero enemyTing = new Hero(false);
+                  peopleList.add(enemyTing);
+				}
+			for(int i = 0; i < foodNum; i ++){
+				if(i == foodNum-1){
 					foodMade = true;
 				}
-			   int randX = (int) (Math.random() * 800);
-			   int randY = (int) (Math.random() * 400);
+			   int randX = (int) (Math.random() * canvasX);
+			   int randY = (int) (Math.random() * canvasY);
 				Food bett = new Food();
 				bett.createFood(randX, randY, gc, ranColor());
 				foodList.add(bett);
@@ -92,11 +91,39 @@ public boolean foodMade = false;
 			for (Food thisFood : foodList) {
 			     thisFood.paint();
 }
-
-
 Rectangle2D rec1 = new Rectangle2D(hero.getX(), hero.getY(),size,size);
 				gc.fillOval(hero.getX(), hero.getY(), size, size);
+for(Hero emeiz : peopleList){
+	int ranInt = (int) (Math.random() * 5);
 
+if(emeiz.getX() > canvasX){
+   emeiz.moveX(-ranInt);
+}
+if(emeiz.getY() > canvasY){
+		   emeiz.moveY(-ranInt);
+}
+
+
+	Rectangle2D enemyRender = new Rectangle2D(emeiz.getX(), emeiz.getY(),150,150);
+				gc.fillOval(emeiz.getX(), emeiz.getY(), 150, 150);
+				          if(rec1.intersects(enemyRender)) {
+					if(size > 150){
+						System.out.println("ate enemy");
+						peopleList.remove(emeiz);
+					}else if(size < 150){
+									System.out.println("You lost");
+					}
+}
+}
+
+
+            Text massStat = new Text("Mass: " + size, 280, 370, 48,gc);
+            massStat.print();
+
+
+
+
+ //food collision stuff
 for (int fod = 0; fod < foodList.size(); fod++)
 {
 	Rectangle2D foodThing = foodList.get(fod).getRect();
@@ -108,12 +135,8 @@ for (int fod = 0; fod < foodList.size(); fod++)
 					System.out.println("You Won");
 				    gc.clearRect(0,0,canvas.getWidth(),canvas.getHeight());
 					endGame = true;
-					   	  		gc.setFill( Color.BLACK);
-					   	  		gc.setStroke( Color.BLACK );
-					   	  		gc.setLineWidth(1);
-					   	  		gc.setFont( font );
-					   	  		gc.fillText( "You Won!", 320, 200 );
-            gc.strokeText( "You Won!", 320, 200 );
+                     Text winGameTxt = new Text("You Won!", 320, 200 , 48,gc);
+            winGameTxt.print();
 				}
 			}
 		}
@@ -121,14 +144,14 @@ for (int fod = 0; fod < foodList.size(); fod++)
 		}
 	}
 	}
-	/*public void print(String s,int x,int y,int size){
-		gc.setFont(new Font("TimesRoman", Font.PLAIN, size));
-		gc.drawString(s,x,y);
-	}*/
+
+
+
 	public Color ranColor(){
     int ranNum = (int) (Math.random() *colors.length );
     return colors[ranNum];
 }
+
 
 	public void handle(final InputEvent event)
 	{
@@ -141,7 +164,7 @@ for (int fod = 0; fod < foodList.size(); fod++)
 
 		}
 				if ( ( (KeyEvent)event).getCode() == KeyCode.DOWN){
-					hero.moveY(speed);
+					hero.moveY(-speed);
 				}
 
 							if ( ( (KeyEvent)event).getCode() == KeyCode.UP){
