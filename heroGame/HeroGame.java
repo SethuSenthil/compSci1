@@ -47,7 +47,7 @@ public class HeroGame extends Application implements EventHandler<InputEvent>
 		stage.setScene(scene);
 		scene.addEventHandler(KeyEvent.KEY_PRESSED,this);
 		gc = canvas.getGraphicsContext2D();
-		hero = new Hero(true);
+		hero = new Hero((Math.random() * (300)));
 		h = new Image("hero.jpg");
 		animate = new AnimateObjects();
 		animate.start();
@@ -73,15 +73,15 @@ public boolean foodMade = false;
            int enemyNum = 3;
            	if(!foodMade){
 				for(int i = 0; i < enemyNum; i ++){
-				  Hero enemyTing = new Hero(false);
+				  Hero enemyTing = new Hero(Math.random() * (canvasX - 15));
                   peopleList.add(enemyTing);
 				}
 			for(int i = 0; i < foodNum; i ++){
 				if(i == foodNum-1){
 					foodMade = true;
 				}
-			   int randX = (int) (Math.random() * canvasX);
-			   int randY = (int) (Math.random() * canvasY);
+			   int randX = (int) (Math.random() * (canvasX-20));
+			   int randY = (int) (Math.random() * (canvasY - 20));
 				Food bett = new Food();
 				bett.createFood(randX, randY, gc, ranColor());
 				foodList.add(bett);
@@ -111,7 +111,11 @@ if(emeiz.getY() > canvasY){
 						System.out.println("ate enemy");
 						peopleList.remove(emeiz);
 					}else if(size < 150){
-									System.out.println("You lost");
+														System.out.println("You Lost");
+													    gc.clearRect(0,0,canvas.getWidth(),canvas.getHeight());
+														endGame = true;
+									                     Text winGameTxt = new Text("You Lost!", 320, 200 , 48,gc);
+            winGameTxt.print();
 					}
 }
 }
@@ -164,7 +168,7 @@ for (int fod = 0; fod < foodList.size(); fod++)
 
 		}
 				if ( ( (KeyEvent)event).getCode() == KeyCode.DOWN){
-					hero.moveY(-speed);
+					hero.moveY(speed);
 				}
 
 							if ( ( (KeyEvent)event).getCode() == KeyCode.UP){
@@ -177,10 +181,6 @@ for (int fod = 0; fod < foodList.size(); fod++)
 
 
 	}
-
-
-
-
 
 
 	public static void main(String[] args)

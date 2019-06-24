@@ -3,15 +3,16 @@ public class Hero
 	private double x = (int) (Math.random() * 300);
 	private double y =(int) (Math.random() * 300);
 
-	public Hero(boolean heroo)
+	public Hero(double ranNum)
 	{
-		if(heroo){
-		x = 100.0;
-		y = 100.0;
-		}
-		if(!heroo){
-
-		}
+		//enem
+		x = ranNum;
+		y = ranNum;
+	}
+		public Hero()
+		{
+			x = 100.0;
+			y = 100.0;
 	}
 
 	public Hero(String name)
